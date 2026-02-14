@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAGAR-SEVA · Emergency Hub (Borivali)</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- STRICT COLOR SYSTEM (light government theme) ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    :root {
+      --color-primary: #2563EB;        /* Soft Blue */
+      --color-secondary: #DBEAFE;      /* Light Sky Blue */
+      --color-background: #F8FAFC;     /* Off White */
+      --color-card: #FFFFFF;           /* Pure White */
+      --color-text-primary: #0F172A;   /* Dark Navy */
+      --color-text-secondary: #475569; /* Slate Grey */
+      --color-success: #22C55E;        /* Soft Green */
+      --color-warning: #F59E0B;        /* Amber */
+      --color-critical: #EF4444;       /* Soft Red */
+
+      --border-radius-md: 1rem;
+      --border-radius-sm: 0.6rem;
+      --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    body {
+      background-color: var(--color-background);
+      color: var(--color-text-primary);
+      line-height: 1.5;
+      padding: 1.5rem 1rem;
+    }
+
+    .emergency-container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* header */
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    .logo span {
+      color: var(--color-primary);
+      background: var(--color-secondary);
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    }
+    .emergency-badge {
+      background-color: var(--color-card);
+      padding: 0.6rem 1.6rem;
+      border-radius: 40px;
+      box-shadow: var(--box-shadow);
+      font-weight: 500;
+    }
+    .emergency-badge i {
+      color: var(--color-critical);
+      margin-right: 0.4rem;
+    }
+
+    /* alert banner */
+    .alert-banner {
+      background-color: var(--color-critical);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 60px;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-weight: 500;
+    }
+    .alert-banner a {
+      color: white;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+
+    /* hero section */
+    .hero-emergency {
+      background-color: var(--color-card);
+      border-radius: var(--border-radius-md);
+      padding: 2rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      border-left: 8px solid var(--color-critical);
+    }
+    .hero-text h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .hero-text p {
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      font-size: 1.1rem;
+    }
+    .sos-sim {
+      background-color: var(--color-critical);
+      color: white;
+      padding: 1rem 2.5rem;
+      border-radius: 60px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.8; } }
+
+    /* emergency services grid */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .service-card {
+      background-color: var(--color-card);
+      border-radius: var(--border-radius-md);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: var(--box-shadow);
+      transition: transform 0.1s ease;
+      border-top: 6px solid transparent;
+    }
+    .service-card.fire { border-top-color: var(--color-critical); }
+    .service-card.ambulance { border-top-color: var(--color-warning); }
+    .service-card.police { border-top-color: var(--color-primary); }
+
+    .service-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 60px;
+      background-color: var(--color-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+    }
+    .service-icon i {
+      font-size: 2.8rem;
+    }
+    .service-card.fire .service-icon i { color: var(--color-critical); }
+    .service-card.ambulance .service-icon i { color: var(--color-warning); }
+    .service-card.police .service-icon i { color: var(--color-primary); }
+
+    .service-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.2rem;
+    }
+    .service-card .phone {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0.5rem 0;
+      color: var(--color-text-primary);
+    }
+    .service-card .sub {
+      color: var(--color-text-secondary);
+      margin-bottom: 1.5rem;
+    }
+    .emergency-btn {
+      background-color: var(--color-primary);
+      color: white;
+      border: none;
+      width: 100%;
+      padding: 1rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      cursor: default;
+    }
+    .emergency-btn.critical {
+      background-color: var(--color-critical);
+    }
+    .emergency-btn.warning {
+      background-color: var(--color-warning);
+      color: var(--color-text-primary);
+    }
+
+    /* quick action + location grid */
+    .action-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .report-emergency {
+      background-color: var(--color-card);
+      border-radius: var(--border-radius-md);
+      padding: 2rem;
+      box-shadow: var(--box-shadow);
+    }
+    .report-emergency h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.3rem;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+    .form-group select, .form-group textarea, .form-group input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 0.8rem;
+      border: 1px solid var(--color-secondary);
+      background-color: var(--color-background);
+      font-size: 1rem;
+      color: var(--color-text-primary);
+    }
+    .radio-group {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    .radio-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-weight: normal;
+      color: var(--color-text-primary);
+    }
+    .submit-critical {
+      background-color: var(--color-critical);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      cursor: default;
+      margin-top: 1rem;
+    }
+
+    .nearby-resources {
+      background-color: var(--color-card);
+      border-radius: var(--border-radius-md);
+      padding: 2rem;
+      box-shadow: var(--box-shadow);
+    }
+    .resource-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--color-secondary);
+    }
+    .resource-item:last-child { border: none; }
+    .resource-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-secondary);
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);
+    }
+    .resource-detail h4 {
+      font-size: 1.1rem;
+    }
+    .resource-detail p {
+      color: var(--color-text-secondary);
+      font-size: 0.9rem;
+    }
+    .distance {
+      margin-left: auto;
+      background: var(--color-secondary);
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+    }
+
+    /* safety tips */
+    .safety-tips {
+      background-color: var(--color-secondary);
+      border-radius: var(--border-radius-md);
+      padding: 2rem;
+      margin-top: 1rem;
+    }
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .tip-card {
+      background-color: var(--color-card);
+      padding: 1.5rem;
+      border-radius: 0.8rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .tip-card i {
+      font-size: 2rem;
+      color: var(--color-primary);
+    }
+
+    /* footer */
+    .footer-note {
+      margin-top: 3rem;
+      text-align: center;
+      color: var(--color-text-secondary);
+      border-top: 1px solid var(--color-secondary);
+      padding-top: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: 1fr; }
+      .action-grid { grid-template-columns: 1fr; }
+      .tips-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="emergency-container">
+    <!-- header -->
+    <div class="top-bar">
+      <div class="logo">
+        <h1>नागर-सेवा <span>emergency hub</span></h1>
+      </div>
+      <div class="emergency-badge">
+        <i class="fa-regular fa-circle-exclamation"></i> Borivali East • West • IC Colony
+      </div>
+    </div>
+
+    <!-- live alert banner -->
+    <div class="alert-banner">
+      <span><i class="fa-regular fa-bell"></i> 🔴 LIVE: small fire reported near IC Colony market · crews responding</span>
+      <a href="#"><i class="fa-regular fa-arrow-right"></i> view on map</a>
+    </div>
+
+    <!-- hero with SOS -->
+    <div class="hero-emergency">
+      <div class="hero-text">
+        <h2>🚨 emergency? we're here.</h2>
+        <p>One tap connects you to fire, ambulance, or police. Your location is shared automatically with the Borivali command center.</p>
+      </div>
+      <div class="sos-sim">
+        <i class="fa-regular fa-hand-fist"></i> SOS
+      </div>
+    </div>
+
+    <!-- 3 main service cards -->
+    <div class="services-grid">
+      <!-- fire -->
+      <div class="service-card fire">
+        <div class="service-icon"><i class="fa-regular fa-fire-extinguisher"></i></div>
+        <h3>fire brigade</h3>
+        <div class="phone">101</div>
+        <div class="sub">Borivali West station · 3 mins away</div>
+        <button class="emergency-btn critical"><i class="fa-regular fa-phone"></i> call 101 now</button>
+        <p style="margin-top: 0.8rem; color: var(--color-text-secondary);"><i class="fa-regular fa-location-dot"></i> share live location</p>
+      </div>
+      <!-- ambulance -->
+      <div class="service-card ambulance">
+        <div class="service-icon"><i class="fa-regular fa-truck-medical"></i></div>
+        <h3>ambulance</h3>
+        <div class="phone">102 / 108</div>
+        <div class="sub">Govt hospital · 5 mins, 2 units available</div>
+        <button class="emergency-btn warning"><i class="fa-regular fa-phone"></i> call 102 now</button>
+        <p style="margin-top: 0.8rem; color: var(--color-text-secondary);"><i class="fa-regular fa-heart-pulse"></i> paramedic on board</p>
+      </div>
+      <!-- police -->
+      <div class="service-card police">
+        <div class="service-icon"><i class="fa-regular fa-shield-halved"></i></div>
+        <h3>police</h3>
+        <div class="phone">100</div>
+        <div class="sub">Borivali East police station · 2 mins</div>
+        <button class="emergency-btn"><i class="fa-regular fa-phone"></i> call 100 now</button>
+        <p style="margin-top: 0.8rem; color: var(--color-text-secondary);"><i class="fa-regular fa-location-dot"></i> patrol car nearby</p>
+      </div>
+    </div>
+
+    <!-- quick incident report + nearby resources -->
+    <div class="action-grid">
+      <!-- left: critical incident form -->
+      <div class="report-emergency">
+        <h3><i class="fa-regular fa-triangle-exclamation" style="color: var(--color-critical);"></i> report a critical incident</h3>
+        <div class="form-group">
+          <label>incident type</label>
+          <select>
+            <option>🔥 fire / smoke</option>
+            <option>🚑 medical emergency</option>
+            <option>🚔 police / safety threat</option>
+            <option>🌊 flooding / drowning</option>
+            <option>⚡ electrocution / line down</option>
+            <option>🏚️ structure collapse</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>location (pin or auto-detect)</label>
+          <input type="text" value="IC Colony, near St. Francis school" placeholder="drag pin or type">
+        </div>
+        <div class="form-group">
+          <label>description / landmarks</label>
+          <textarea rows="2" placeholder="e.g. black smoke, injured person, etc."></textarea>
+        </div>
+        <div class="form-group">
+          <label>urgency level</label>
+          <div class="radio-group">
+            <label><input type="radio" name="urg" checked> <span class="critical-dot" style="background: var(--color-critical); width:12px; height:12px; border-radius:20px; display:inline-block;"></span> life-threatening</label>
+            <label><input type="radio" name="urg"> <span style="background: var(--color-warning); width:12px; height:12px; border-radius:20px; display:inline-block;"></span> urgent</label>
+          </div>
+        </div>
+        <button class="submit-critical"><i class="fa-regular fa-circle-exclamation"></i> send emergency alert</button>
+        <p style="margin-top: 0.8rem; font-size:0.8rem; color: var(--color-text-secondary);"><i class="fa-regular fa-check-circle" style="color: var(--color-success);"></i> all services notified simultaneously if needed</p>
+      </div>
+
+      <!-- right: nearby resources (police, hospital, fire) -->
+      <div class="nearby-resources">
+        <h3><i class="fa-regular fa-location-dot" style="color: var(--color-primary);"></i> emergency units near you</h3>
+        <div class="resource-item">
+          <div class="resource-icon"><i class="fa-regular fa-fire-extinguisher"></i></div>
+          <div class="resource-detail"><h4>fire station · Borivali West</h4><p>2 engines, 8 personnel</p></div>
+          <div class="distance">1.2 km</div>
+        </div>
+        <div class="resource-item">
+          <div class="resource-icon"><i class="fa-regular fa-truck-medical"></i></div>
+          <div class="resource-detail"><h4>Jeevan ambulance · IC Colony</h4><p>advanced life support</p></div>
+          <div class="distance">0.6 km</div>
+        </div>
+        <div class="resource-item">
+          <div class="resource-icon"><i class="fa-regular fa-shield-halved"></i></div>
+          <div class="resource-detail"><h4>police chowky · Mandapeshwar</h4><p>2 patrol units</p></div>
+          <div class="distance">1.5 km</div>
+        </div>
+        <div class="resource-item">
+          <div class="resource-icon"><i class="fa-regular fa-hospital"></i></div>
+          <div class="resource-detail"><h4>Umrao hospital (casualty)</h4><p>24x7 emergency</p></div>
+          <div class="distance">2.0 km</div>
+        </div>
+        <div style="margin-top: 1rem; background: var(--color-secondary); padding: 0.8rem; border-radius: 0.8rem; color: var(--color-text-secondary);">
+          <i class="fa-regular fa-location-arrow"></i> live tracking enabled · updating every 5 sec
+        </div>
+      </div>
+    </div>
+
+    <!-- additional resources: civil defence, disaster -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+      <div style="background-color: var(--color-card); padding: 1.5rem; border-radius: var(--border-radius-md);">
+        <h3><i class="fa-regular fa-helmet-safety" style="color: var(--color-primary);"></i> disaster management (Borivali)</h3>
+        <p style="color: var(--color-text-secondary);">control room: 022-1234-5678 · additional task force available</p>
+        <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+          <span style="background: var(--color-secondary); padding: 0.4rem 1rem; border-radius: 30px;">🌀 flood rescue</span>
+          <span style="background: var(--color-secondary); padding: 0.4rem 1rem; border-radius: 30px;">🏚️ building collapse</span>
+        </div>
+      </div>
+      <div style="background-color: var(--color-card); padding: 1.5rem; border-radius: var(--border-radius-md);">
+        <h3><i class="fa-regular fa-bolt" style="color: var(--color-warning);"></i> electricity & gas emergency</h3>
+        <p style="color: var(--color-text-secondary);">BEST / Mahanagar Gas: 1916 (gas leak) · 1800-22-3333 (power)</p>
+        <div style="margin-top: 0.8rem; display: flex; gap: 1rem;">
+          <span><i class="fa-regular fa-circle-check" style="color: var(--color-success);"></i> crew dispatched?</span>
+          <span class="badge" style="background: var(--color-warning); color: white; padding:0.2rem 1rem; border-radius:40px;">power outage near ektar</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- safety tips (quick) -->
+    <div class="safety-tips">
+      <h3><i class="fa-regular fa-shield"></i> quick safety guidelines</h3>
+      <div class="tips-grid">
+        <div class="tip-card"><i class="fa-regular fa-fire"></i> <span>fire: stay low, use stairs</span></div>
+        <div class="tip-card"><i class="fa-regular fa-heart"></i> <span>heart attack: call 102, don't move</span></div>
+        <div class="tip-card"><i class="fa-regular fa-shield-halved"></i> <span>police: note description, stay safe</span></div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <div class="footer-note">
+      <i class="fa-regular fa-circle-exclamation" style="color: var(--color-critical);"></i> NAGAR-SEVA emergency coordination – Borivali East/West, IC Colony, Mandapeshwar.<br>
+      For life‑threatening situations, always call 100/101/102. This platform augments municipal response.
+    </div>
+  </div>
+</body>
+</html>

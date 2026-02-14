@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAGAR-SEVA · Community Pressure (Borivali)</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* ----- STRICT COLOR SYSTEM (light government theme) ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    :root {
+      --color-primary: #2563EB;        /* Soft Blue */
+      --color-secondary: #DBEAFE;      /* Light Sky Blue */
+      --color-background: #F8FAFC;     /* Off White */
+      --color-card: #FFFFFF;           /* Pure White */
+      --color-text-primary: #0F172A;   /* Dark Navy */
+      --color-text-secondary: #475569; /* Slate Grey */
+      --color-success: #22C55E;        /* Soft Green */
+      --color-warning: #F59E0B;        /* Amber */
+      --color-critical: #EF4444;       /* Soft Red */
+
+      --border-radius-md: 1rem;
+      --border-radius-sm: 0.6rem;
+      --box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    /* base */
+    body {
+      background-color: var(--color-background);  /* page background */
+      color: var(--color-text-primary);
+      line-height: 1.5;
+      padding: 1.5rem 1rem;
+    }
+
+    .community-container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* header */
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .logo h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    .logo span {
+      color: var(--color-primary);
+      background: var(--color-secondary);
+      padding: 0.2rem 1rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      margin-left: 0.5rem;
+    }
+    .pressure-badge {
+      background-color: var(--color-card);        /* pure white card */
+      padding: 0.6rem 1.6rem;
+      border-radius: 40px;
+      box-shadow: var(--box-shadow);
+      font-weight: 500;
+      color: var(--color-text-primary);
+    }
+    .pressure-badge i {
+      color: var(--color-critical);                /* critical icon */
+      margin-right: 0.4rem;
+    }
+
+    /* hero */
+    .hero-pressure {
+      background-color: var(--color-card);         /* card white */
+      border-radius: var(--border-radius-md);
+      padding: 2rem 2rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid rgba(37,99,235,0.05);
+    }
+    .hero-text h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 0.5rem;
+    }
+    .hero-text p {
+      color: var(--color-text-secondary);          /* supporting text */
+      max-width: 600px;
+      font-size: 1.05rem;
+    }
+    .hero-stat {
+      background-color: var(--color-secondary);    /* secondary bg */
+      padding: 1rem 2rem;
+      border-radius: 60px;
+      text-align: center;
+      color: var(--color-text-primary);
+    }
+    .hero-stat .big {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-primary);                 /* primary for emphasis */
+    }
+
+    /* main grid */
+    .pressure-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    /* feed cards */
+    .issues-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .issue-card {
+      background-color: var(--color-card);         /* white card */
+      border-radius: var(--border-radius-md);
+      padding: 1.5rem;
+      box-shadow: var(--box-shadow);
+      transition: all 0.15s;
+      border-left: 6px solid transparent;
+    }
+    .issue-card.high-pressure {
+      border-left-color: var(--color-critical);     /* critical = high pressure */
+    }
+    .issue-card.medium-pressure {
+      border-left-color: var(--color-warning);      /* warning = medium */
+    }
+    .issue-card.low-pressure {
+      border-left-color: var(--color-success);      /* success = low pressure */
+    }
+
+    .card-header {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .category-icon {
+      background-color: var(--color-secondary);    /* secondary bg */
+      width: 48px;
+      height: 48px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-primary);                  /* primary icon */
+      font-size: 1.4rem;
+    }
+    .issue-meta {
+      flex: 1;
+    }
+    .issue-title {
+      font-weight: 650;
+      font-size: 1.2rem;
+      color: var(--color-text-primary);             /* main text */
+      margin-bottom: 0.2rem;
+    }
+    .issue-location {
+      color: var(--color-text-secondary);           /* supporting */
+      font-size: 0.9rem;
+    }
+    .issue-location i {
+      margin-right: 0.3rem;
+      color: var(--color-primary);
+    }
+
+    .pressure-meter {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 1rem 0 0.8rem;
+      flex-wrap: wrap;
+    }
+    .meter-bar {
+      background-color: var(--color-secondary);     /* secondary track */
+      height: 10px;
+      width: 220px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .meter-fill {
+      height: 10px;
+      background-color: var(--color-critical);      /* fill = critical color (pressure) */
+      border-radius: 20px;
+      width: 0%;
+    }
+    .support-count {
+      font-weight: 650;
+      color: var(--color-text-primary);
+    }
+    .support-count span {
+      color: var(--color-text-secondary);
+      font-weight: 400;
+      font-size: 0.9rem;
+    }
+
+    .pressure-action {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.8rem;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+    .btn-support {
+      background-color: var(--color-primary);       /* primary button */
+      border: none;
+      color: white;                                  /* white text on primary */
+      font-weight: 600;
+      padding: 0.7rem 1.5rem;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.95rem;
+      cursor: default;
+      box-shadow: 0 4px 8px rgba(37,99,235,0.2);
+    }
+    .btn-support i {
+      font-size: 1rem;
+    }
+    .pressure-level {
+      background: var(--color-secondary);           /* secondary chip */
+      padding: 0.3rem 1rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    .level-high {
+      background: var(--color-critical);            /* critical background */
+      color: white;                                  /* white text on critical */
+    }
+
+    /* right sidebar */
+    .pressure-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .info-card {
+      background-color: var(--color-card);          /* white card */
+      border-radius: var(--border-radius-md);
+      padding: 1.8rem 1.5rem;
+      box-shadow: var(--box-shadow);
+    }
+    .info-card h3 {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      font-size: 1.2rem;
+      color: var(--color-text-primary);
+    }
+    .hot-zones {
+      list-style: none;
+    }
+    .hot-zones li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--color-secondary); /* secondary divider */
+      color: var(--color-text-primary);
+    }
+    .hot-zones li:last-child { border: none; }
+    .zone-name i { 
+      color: var(--color-primary); 
+      width: 1.4rem; 
+    }
+    .zone-pulse {
+      background: var(--color-critical);            /* critical background for "hot" */
+      color: white;
+      border-radius: 30px;
+      padding: 0.2rem 0.8rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .nearby-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .nearby-item {
+      background-color: var(--color-secondary);     /* secondary bg */
+      padding: 0.8rem 1rem;
+      border-radius: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      color: var(--color-text-primary);
+    }
+    .nearby-item .small-support {
+      background: var(--color-card);                 /* white */
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      color: var(--color-text-primary);
+    }
+
+    .badge-gov {
+      background-color: var(--color-secondary);      /* secondary */
+      border-radius: 40px;
+      padding: 0.5rem 1.2rem;
+      display: inline-block;
+      font-size: 0.8rem;
+      color: var(--color-text-secondary);            /* supporting text */
+      margin: 0.5rem 0;
+    }
+
+    /* special card with secondary background */
+    .info-card.special-bg {
+      background-color: var(--color-secondary);      /* secondary for variation */
+    }
+
+    /* emergency card */
+    .emergency-card {
+      border: 2px solid var(--color-critical);       /* critical border */
+    }
+
+    /* footer */
+    .pressure-footer {
+      margin-top: 3rem;
+      text-align: center;
+      color: var(--color-text-secondary);
+      border-top: 1px solid var(--color-secondary);
+      padding-top: 2rem;
+      font-size: 0.9rem;
+    }
+
+    /* extra stats strip */
+    .stats-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-between;
+      background-color: var(--color-card);           /* white */
+      padding: 1.8rem;
+      border-radius: 1rem;
+      margin-top: 2.5rem;
+      color: var(--color-text-primary);
+    }
+    .stats-strip i {
+      color: var(--color-primary);
+      margin-right: 0.4rem;
+    }
+
+    /* responsiveness */
+    @media (max-width: 800px) {
+      .pressure-grid { grid-template-columns: 1fr; }
+      .hero-pressure { flex-direction: column; align-items: start; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="community-container">
+
+    <!-- header with location -->
+    <div class="top-bar">
+      <div class="logo">
+        <h1>नगर-सेवा <span>community pressure</span></h1>
+      </div>
+      <div class="pressure-badge">
+        <i class="fa-regular fa-hand-fist"></i> 1,420 people supporting now
+      </div>
+    </div>
+
+    <!-- hero / how it works -->
+    <div class="hero-pressure">
+      <div class="hero-text">
+        <h2><i class="fa-regular fa-people-group" style="color: var(--color-primary); margin-right: 10px;"></i> Civic Pressure System</h2>
+        <p>📍 Borivali East • West • IC Colony • Mandapeshwar • & nearby wards.<br>Support an issue → pressure level rises → municipality sees HIGH PRIORITY.</p>
+      </div>
+      <div class="hero-stat">
+        <span class="big">8</span> active hotspots <br><span style="font-size: 0.8rem; color: var(--color-text-secondary);">most supported this week</span>
+      </div>
+    </div>
+
+    <!-- main grid: community feed + side info -->
+    <div class="pressure-grid">
+      <!-- LEFT FEED: issues that need support -->
+      <div class="issues-feed">
+
+        <!-- card 1: high pressure (IC Colony) -->
+        <div class="issue-card high-pressure">
+          <div class="card-header">
+            <div class="category-icon"><i class="fa-regular fa-droplet"></i></div>
+            <div class="issue-meta">
+              <div class="issue-title">Broken water pipeline, flooding daily</div>
+              <div class="issue-location"><i class="fa-regular fa-location-dot"></i> IC Colony, near St. Francis school · Borivali West</div>
+            </div>
+          </div>
+          <!-- pressure meter -->
+          <div class="pressure-meter">
+            <div class="meter-bar"><div class="meter-fill" style="width: 92%;"></div></div>
+            <span class="support-count">147 <span>supporters</span></span>
+          </div>
+          <div class="pressure-action">
+            <button class="btn-support"><i class="fa-regular fa-hand-fist"></i> support · raise pressure</button>
+            <span class="pressure-level level-high"><i class="fa-regular fa-fire"></i> CRITICAL pressure</span>
+          </div>
+          <div style="margin-top: 0.8rem; font-size: 0.85rem; color: var(--color-text-secondary);">
+            <i class="fa-regular fa-clock"></i> reported 4 hrs ago · 32 neighbours from IC Colony already supporting
+          </div>
+        </div>
+
+        <!-- card 2: high pressure (Borivali East) -->
+        <div class="issue-card high-pressure">
+          <div class="card-header">
+            <div class="category-icon"><i class="fa-regular fa-bolt"></i></div>
+            <div class="issue-meta">
+              <div class="issue-title">Frequent power cuts / transformer issue</div>
+              <div class="issue-location"><i class="fa-regular fa-location-dot"></i> Borivali East, near railway station</div>
+            </div>
+          </div>
+          <div class="pressure-meter">
+            <div class="meter-bar"><div class="meter-fill" style="width: 78%;"></div></div>
+            <span class="support-count">98 <span>supporters</span></span>
+          </div>
+          <div class="pressure-action">
+            <button class="btn-support"><i class="fa-regular fa-hand-fist"></i> support · raise pressure</button>
+            <span class="pressure-level level-high">HIGH pressure</span>
+          </div>
+          <div style="margin-top: 0.8rem; color: var(--color-text-secondary); font-size:0.85rem;">
+            <i class="fa-regular fa-message"></i> 8 comments · last support 5min ago
+          </div>
+        </div>
+
+        <!-- card 3: medium pressure (Mandapeshwar) -->
+        <div class="issue-card medium-pressure">
+          <div class="card-header">
+            <div class="category-icon"><i class="fa-regular fa-road"></i></div>
+            <div class="issue-meta">
+              <div class="issue-title">Deep potholes on main road, risk of accidents</div>
+              <div class="issue-location"><i class="fa-regular fa-location-dot"></i> Mandapeshwar Road, Borivali West</div>
+            </div>
+          </div>
+          <div class="pressure-meter">
+            <div class="meter-bar"><div class="meter-fill" style="width: 55%;"></div></div>
+            <span class="support-count">43 <span>supporters</span></span>
+          </div>
+          <div class="pressure-action">
+            <button class="btn-support"><i class="fa-regular fa-hand-fist"></i> support · raise pressure</button>
+            <span class="pressure-level">MEDIUM pressure</span>
+          </div>
+          <div style="margin-top:0.8rem; font-size:0.85rem; color: var(--color-text-secondary);">⬆️ 12 supports in last hour</div>
+        </div>
+
+        <!-- card 4: low pressure (west) but near IC Colony -->
+        <div class="issue-card low-pressure">
+          <div class="card-header">
+            <div class="category-icon"><i class="fa-regular fa-trash-can"></i></div>
+            <div class="issue-meta">
+              <div class="issue-title">Garbage not collected for 3 days</div>
+              <div class="issue-location"><i class="fa-regular fa-location-dot"></i> IC Colony, near Gaon Devi mandir</div>
+            </div>
+          </div>
+          <div class="pressure-meter">
+            <div class="meter-bar"><div class="meter-fill" style="width: 18%;"></div></div>
+            <span class="support-count">9 <span>supporters</span></span>
+          </div>
+          <div class="pressure-action">
+            <button class="btn-support"><i class="fa-regular fa-hand-fist"></i> support · raise pressure</button>
+            <span class="pressure-level">LOW pressure</span>
+          </div>
+          <div style="margin-top:0.8rem; color: var(--color-text-secondary);">be the first from your lane to support</div>
+        </div>
+
+        <!-- card 5: high pressure near chikoowadi -->
+        <div class="issue-card high-pressure">
+          <div class="card-header">
+            <div class="category-icon"><i class="fa-regular fa-lightbulb"></i></div>
+            <div class="issue-meta">
+              <div class="issue-title">Streetlight outage – dark stretch for 200m</div>
+              <div class="issue-location"><i class="fa-regular fa-location-dot"></i> Chikoowadi, Borivali West</div>
+            </div>
+          </div>
+          <div class="pressure-meter">
+            <div class="meter-bar"><div class="meter-fill" style="width: 81%;"></div></div>
+            <span class="support-count">112 <span>supporters</span></span>
+          </div>
+          <div class="pressure-action">
+            <button class="btn-support"><i class="fa-regular fa-hand-fist"></i> support · raise pressure</button>
+            <span class="pressure-level level-high"><i class="fa-regular fa-triangle-exclamation"></i> VERY HIGH</span>
+          </div>
+        </div>
+      </div> <!-- end left feed -->
+
+      <!-- RIGHT SIDEBAR: nearby pressure & hotspots -->
+      <div class="pressure-sidebar">
+        <!-- hot zones / wards -->
+        <div class="info-card">
+          <h3><i class="fa-regular fa-map-location-dot" style="color: var(--color-critical);"></i> 🔥 high pressure zones</h3>
+          <ul class="hot-zones">
+            <li><span class="zone-name"><i class="fa-regular fa-location-dot"></i> IC Colony west</span> <span class="zone-pulse">CRITICAL</span></li>
+            <li><span class="zone-name"><i class="fa-regular fa-location-dot"></i> Borivali East (station)</span> <span class="zone-pulse">HIGH</span></li>
+            <li><span class="zone-name"><i class="fa-regular fa-location-dot"></i> Mandapeshwar Rd</span> <span class="zone-pulse">MEDIUM</span></li>
+            <li><span class="zone-name"><i class="fa-regular fa-location-dot"></i> Chikoowadi</span> <span class="zone-pulse">🔥 81</span></li>
+            <li><span class="zone-name"><i class="fa-regular fa-location-dot"></i> Eksar village</span> <span class="zone-pulse">RISING</span></li>
+          </ul>
+          <div class="badge-gov"><i class="fa-regular fa-clock"></i> updated live · 2 min ago</div>
+        </div>
+
+        <!-- people near you supporting -->
+        <div class="info-card">
+          <h3><i class="fa-regular fa-people-arrows" style="color: var(--color-primary);"></i> from your area (IC Colony)</h3>
+          <div class="nearby-list">
+            <div class="nearby-item"><span>Rajesh M.</span> <span class="small-support">supported water issue</span></div>
+            <div class="nearby-item"><span>Sunita P.</span> <span class="small-support">+1 pothole near post office</span></div>
+            <div class="nearby-item"><span>Yusuf K.</span> <span class="small-support">streetlight · 5 min back</span></div>
+            <div class="nearby-item"><span>Meenal G.</span> <span class="small-support">garbage pickup</span></div>
+          </div>
+          <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-text-secondary);"><i class="fa-regular fa-people-group"></i> 17 other neighbours active now</p>
+        </div>
+
+        <!-- how pressure works (simple flow) using secondary background -->
+        <div class="info-card special-bg" style="background-color: var(--color-secondary);">
+          <h3 style="color: var(--color-text-primary);"><i class="fa-regular fa-circle-info"></i> pressure = priority</h3>
+          <ul style="margin-left: 1.2rem; color: var(--color-text-secondary);">
+            <li>🗳️ 1 citizen reports issue</li>
+            <li>📢 appears in community</li>
+            <li>👥 neighbours support</li>
+            <li>📈 pressure level rises</li>
+            <li>🚨 admin sees HIGH PRIORITY</li>
+          </ul>
+          <div style="background: var(--color-card); border-radius: 0.8rem; padding: 1rem; margin-top: 1rem; color: var(--color-text-primary);">
+            <i class="fa-regular fa-scale-balanced" style="color: var(--color-primary);"></i> <strong>civic pressure system</strong> – not likes, it's urgency.
+          </div>
+        </div>
+
+        <!-- flag an emergency (critical border) -->
+        <div class="info-card emergency-card">
+          <h3><i class="fa-regular fa-circle-exclamation" style="color: var(--color-critical);"></i> need immediate attention?</h3>
+          <p style="font-size:0.9rem; margin-bottom: 1rem; color: var(--color-text-secondary);">If issue is dangerous, flag as emergency – it jumps to top of admin queue.</p>
+          <span style="background-color: var(--color-critical); color: white; padding: 0.5rem 1.5rem; border-radius: 40px; display: inline-block;">⚠️ emergency flag (only for safety)</span>
+        </div>
+      </div> <!-- end sidebar -->
+    </div> <!-- end pressure grid -->
+
+    <!-- community summary / extra stats -->
+    <div class="stats-strip">
+      <div><i class="fa-regular fa-hand-fist" style="color: var(--color-primary);"></i> <strong>total support actions</strong> 4.2k this week</div>
+      <div><i class="fa-regular fa-map" style="color: var(--color-success);"></i> <strong>wards watching:</strong> Borivali East, West, IC Colony, Mandapeshwar</div>
+      <div><i class="fa-regular fa-trophy" style="color: var(--color-warning);"></i> <strong>top supporter:</strong> Sneha P. (supported 34 issues)</div>
+    </div>
+
+    <!-- footer -->
+    <div class="pressure-footer">
+      <i class="fa-regular fa-people-group"></i> NAGAR-SEVA · community pressure · every support makes the issue visible to municipality.<br>
+      📍 Borivali East | Borivali West | IC Colony | Eksar | Mandapeshwar — your voice counts.
+    </div>
+
+  </div> <!-- end container -->
+</body>
+</html>

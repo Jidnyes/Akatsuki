@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAGAR-SEVA Borivali · Rewards (Light Government Theme)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== COLOR SYSTEM – LIGHT GOVERNMENT THEME ===== */
+        :root {
+            --color-primary: #2563EB;        /* Soft Blue – buttons, links, active */
+            --color-secondary: #DBEAFE;       /* Light Sky Blue – sidebars, filters, secondary areas */
+            --color-background: #F8FAFC;      /* Off White – page background */
+            --color-card: #FFFFFF;             /* Pure White – cards, panels, modals */
+            --color-text-primary: #0F172A;     /* Dark Navy – main text */
+            --color-text-secondary: #475569;   /* Slate Grey – supporting text */
+            --color-success: #22C55E;          /* Soft Green – resolved / success states */
+            --color-warning: #F59E0B;           /* Amber – warning / delay */
+            --color-critical: #EF4444;          /* Soft Red – critical / high severity */
+
+            /* shadows – derived from primary with opacity, allowed */
+            --shadow-card: 0 4px 12px rgba(37, 99, 235, 0.08), 0 2px 4px rgba(0,0,0,0.02);
+            --shadow-hover: 0 12px 24px rgba(37, 99, 235, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--color-background);  /* strict page background */
+            color: var(--color-text-primary);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* remove animated circles – they used gradients outside palette, replaced with subtle secondary element */
+        .bg-decoration {
+            display: none;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* header – card background, secondary for accents */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 2rem 0;
+            margin-bottom: 2.5rem;
+            border-bottom: 2px solid var(--color-secondary);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--color-primary);      /* primary blue */
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--color-text-primary);      /* dark navy */
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text p {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);    /* slate grey */
+            font-family: 'Space Mono', monospace;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--color-secondary);     /* light sky blue */
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            color: var(--color-text-primary);
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+        }
+
+        .user-info h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        .user-info p {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* ===== REWARDS PANEL – pure white card, primary accents ===== */
+        .rewards-panel {
+            background: var(--color-card);           /* pure white */
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--color-secondary);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .rewards-badge {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .rewards-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--color-primary);        /* solid primary */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .rewards-text h2 {
+            font-size: 1.9rem;
+            font-weight: 800;
+            color: var(--color-text-primary);
+        }
+
+        .rewards-text h2 span {
+            color: var(--color-primary);            /* highlight number in primary */
+        }
+
+        .rewards-text p {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .points-container {
+            display: flex;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .point-card {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .point-value {
+            font-size: 2.7rem;
+            font-weight: 800;
+            line-height: 1;
+            color: var(--color-text-primary);
+        }
+
+        .point-label {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .point-value i {
+            color: var(--color-primary);
+            margin-right: 4px;
+        }
+
+        .next-reward {
+            background: var(--color-secondary);
+            border-radius: 60px;
+            padding: 0.5rem 1.8rem;
+            border: 1px solid var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .next-reward span {
+            font-weight: 500;
+            color: var(--color-text-primary);
+        }
+
+        .progress-reward {
+            width: 120px;
+            height: 8px;
+            background: rgba(37, 99, 235, 0.15);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-reward-fill {
+            height: 100%;
+            width: 70%;
+            background: var(--color-primary);
+            border-radius: 10px;
+        }
+
+        /* stats grid – cards pure white */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-card {
+            background: var(--color-card);
+            border-radius: 16px;
+            padding: 1.8rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--color-secondary);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-primary);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            background: var(--color-secondary);
+            color: var(--color-primary);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            color: var(--color-text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+        }
+
+        /* controls – secondary background for filter area */
+        .controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            background: var(--color-secondary);
+            padding: 1.2rem 1.5rem;
+            border-radius: 24px;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 2.8rem;
+            background: var(--color-card);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 40px;
+            color: var(--color-text-primary);
+            font-size: 0.95rem;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-text-secondary);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.7rem 1.5rem;
+            background: var(--color-card);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 40px;
+            color: var(--color-text-primary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--color-primary);
+            background: white;
+        }
+
+        .filter-btn.active {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+        }
+
+        select.filter-btn {
+            appearance: none;
+            padding-right: 2.5rem;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 12 12' fill='%232563EB'%3E%3Cpath d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-color: var(--color-card);
+        }
+
+        /* complaints grid – cards pure white */
+        .complaints-section {
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: var(--color-text-primary);
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 30px;
+            background: var(--color-primary);
+            border-radius: 2px;
+        }
+
+        .complaints-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .complaint-card {
+            background: var(--color-card);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--color-secondary);
+            position: relative;
+            animation: slideIn 0.5s ease backwards;
+        }
+
+        .complaint-card:nth-child(1) { animation-delay: 0.1s; }
+        .complaint-card:nth-child(2) { animation-delay: 0.2s; }
+        .complaint-card:nth-child(3) { animation-delay: 0.3s; }
+        .complaint-card:nth-child(4) { animation-delay: 0.4s; }
+        .complaint-card:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .complaint-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--color-primary);
+        }
+
+        /* reward badge inside card – uses secondary + primary */
+        .complaint-reward-points {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--color-secondary);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            border: 1px solid var(--color-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--color-text-primary);
+            z-index: 5;
+        }
+
+        .complaint-reward-points i {
+            color: var(--color-primary);
+        }
+
+        /* complaint header */
+        .complaint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 1rem;
+        }
+
+        .complaint-id-section {
+            flex: 1;
+        }
+
+        .complaint-id {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .complaint-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-text-primary);
+        }
+
+        .complaint-category {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            background: var(--color-secondary);
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        /* status badges using semantic colors */
+        .status-badge {
+            padding: 0.5rem 1.2rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            background: white;
+            border: 1.5px solid;
+        }
+
+        .status-badge.reported {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+        }
+        .status-badge.assigned {
+            border-color: var(--color-warning);
+            color: var(--color-warning);
+        }
+        .status-badge.in-progress {
+            border-color: var(--color-warning);
+            color: var(--color-warning);
+        }
+        .status-badge.resolved {
+            border-color: var(--color-success);
+            color: var(--color-success);
+        }
+
+        .status-pulse {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            opacity: 0.7;
+        }
+
+        .complaint-description {
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .complaint-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .meta-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--color-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-primary);
+            font-size: 1.1rem;
+        }
+
+        .meta-content h4 {
+            font-size: 0.75rem;
+            color: var(--color-text-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.2rem;
+        }
+
+        .meta-content p {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--color-text-primary);
+        }
+
+        /* progress tracker – secondary background */
+        .progress-tracker {
+            background: var(--color-secondary);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .progress-line {
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            right: 25px;
+            height: 3px;
+            background: rgba(37, 99, 235, 0.2);
+            z-index: 0;
+        }
+
+        .progress-line-fill {
+            height: 100%;
+            background: var(--color-primary);
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 1;
+            background: transparent;
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid rgba(37, 99, 235, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--color-text-secondary);
+            transition: all 0.2s;
+        }
+
+        .progress-step.completed .step-circle {
+            background: var(--color-success);
+            border-color: var(--color-success);
+            color: white;
+        }
+
+        .progress-step.active .step-circle {
+            background: var(--color-primary);
+            border-color: var(--color-primary);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+
+        .step-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--color-text-secondary);
+        }
+
+        .progress-step.completed .step-label,
+        .progress-step.active .step-label {
+            color: var(--color-text-primary);
+        }
+
+        /* action buttons */
+        .complaint-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            border: 1px solid rgba(37, 99, 235, 0.2);
+            color: var(--color-text-primary);
+        }
+
+        .action-btn.primary {
+            background: var(--color-primary);
+            color: white;
+            border: none;
+        }
+
+        .action-btn.primary:hover {
+            background: #1a4fbc; /* darker primary */
+            transform: translateY(-2px);
+        }
+
+        .action-btn.secondary:hover {
+            border-color: var(--color-primary);
+            background: var(--color-secondary);
+        }
+
+        /* empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--color-card);
+            border-radius: 20px;
+            border: 2px dashed var(--color-secondary);
+        }
+        .empty-icon {
+            font-size: 4rem;
+            color: var(--color-secondary);
+            margin-bottom: 1rem;
+        }
+        .empty-state h3 {
+            font-size: 1.5rem;
+            color: var(--color-text-primary);
+        }
+        .empty-state p {
+            color: var(--color-text-secondary);
+        }
+
+        /* responsive */
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .header { flex-direction: column; text-align: center; }
+            .logo-section { flex-direction: column; }
+            .controls { flex-direction: column; align-items: stretch; }
+            .complaint-header { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo-icon"><i class="fas fa-city"></i></div>
+                <div class="logo-text">
+                    <h1>NAGAR-SEVA</h1>
+                    <p>Borivali Citizen Portal</p>
+                </div>
+            </div>
+            <div class="user-profile">
+                <div class="user-avatar">RJ</div>
+                <div class="user-info">
+                    <h3>Rajesh Joshi</h3>
+                    <p>Borivali West</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Rewards panel – light government theme -->
+        <div class="rewards-panel">
+            <div class="rewards-badge">
+                <div class="rewards-icon"><i class="fas fa-star"></i></div>
+                <div class="rewards-text">
+                    <h2><span>1,250</span> reward points</h2>
+                    <p>You're a <strong>Borivali Star</strong> · keep complaining, keep earning</p>
+                </div>
+            </div>
+            <div class="points-container">
+                <div class="point-card">
+                    <div class="point-value"><i class="fas fa-coins"></i> 150</div>
+                    <div class="point-label">pending</div>
+                </div>
+                <div class="point-card">
+                    <div class="point-value"><i class="fas fa-gem"></i> 850</div>
+                    <div class="point-label">from resolved</div>
+                </div>
+                <div class="next-reward">
+                    <span>🎁 next reward</span>
+                    <div class="progress-reward"><div class="progress-reward-fill" style="width:70%"></div></div>
+                    <span>250 pts</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats cards -->
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-icon"><i class="fas fa-clipboard-list"></i></div><div class="stat-number">12</div><div class="stat-label">Total Complaints</div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-number">8</div><div class="stat-label">Resolved</div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fas fa-spinner"></i></div><div class="stat-number">3</div><div class="stat-label">In Progress</div></div>
+            <div class="stat-card"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-number">1</div><div class="stat-label">Pending</div></div>
+        </div>
+
+        <!-- Filters (secondary background) -->
+        <div class="controls">
+            <div class="search-box"><i class="fas fa-search"></i><input type="text" id="searchInput" placeholder="Search complaints..."></div>
+            <div class="filter-group">
+                <select class="filter-btn" id="statusFilter">
+                    <option value="all">All Status</option>
+                    <option value="reported">Reported</option>
+                    <option value="assigned">Assigned</option>
+                    <option value="in-progress">In Progress</option>
+                    <option value="resolved">Resolved</option>
+                </select>
+                <select class="filter-btn" id="categoryFilter">
+                    <option value="all">All Categories</option>
+                    <option value="water">Water Supply</option>
+                    <option value="roads">Roads & Potholes</option>
+                    <option value="garbage">Garbage</option>
+                    <option value="electricity">Electricity</option>
+                    <option value="drainage">Drainage</option>
+                    <option value="streetlight">Streetlight</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Complaints grid (cards use white, badges semantic) -->
+        <section class="complaints-section">
+            <h2 class="section-title"><span>My Complaints</span></h2>
+            <div class="complaints-grid" id="complaintsGrid">
+                <!-- resolved card -->
+                <div class="complaint-card" data-status="resolved" data-category="roads">
+                    <div class="complaint-reward-points"><i class="fas fa-medal"></i> +100 pts</div>
+                    <div class="complaint-header">
+                        <div class="complaint-id-section">
+                            <div class="complaint-id">#NS-2025-0847</div>
+                            <h3 class="complaint-title">Large Pothole on IC Colony Road</h3>
+                            <span class="complaint-category"><i class="fas fa-road"></i> Roads & Potholes</span>
+                        </div>
+                        <div class="status-badge resolved"><span class="status-pulse"></span>Resolved</div>
+                    </div>
+                    <p class="complaint-description">Large pothole near IC Colony Main Road junction causing accidents at night. 2ft wide, 8in deep.</p>
+                    <div class="complaint-meta">
+                        <div class="meta-item"><div class="meta-icon"><i class="fas fa-calendar"></i></div><div class="meta-content"><h4>Reported On</h4><p>Feb 2, 2025</p></div></div>
+                        <div class="meta-item"><div class="meta-icon"><i class="fas fa-map-marker-alt"></i></div><div class="meta-content"><h4>Location</h4><p>IC Colony, Borivali West</p></div></div>
+                        <div class="meta-item"><div class="meta-icon"><i class="fas fa-user-tie"></i></div><div class="meta-content"><h4>Assigned To</h4><p>Prakash Sharma (Ward 27)</p></div></div>
+                    </div>
+                    <div class="progress-tracker"><div class="progress-title">Status Timeline</div><div class="progress-steps"><div class="progress-line"><div class="progress-line-fill" style="width:100%"></div></div><div class="progress-step completed"><div class="step-circle"><i class="fas fa-check"></i></div><span class="step-label">Reported</span></div><div class="progress-step completed"><div class="step-circle"><i class="fas fa-check"></i></div><span class="step-label">Assigned</span></div><div class="progress-step completed"><div class="step-circle"><i class="fas fa-check"></i></div><span class="step-label">In Progress</span></div><div class="progress-step completed"><div class="step-circle"><i class="fas fa-check"></i></div><span class="step-label">Resolved</span></div></div></div>
+                    <div class="complaint-actions"><button class="action-btn primary"><i class="fas fa-images"></i>View Before/After</button><button class="action-btn secondary"><i class="fas fa-star"></i>Rate Service</button><button class="action-btn secondary"><i class="fas fa-map-marked-alt"></i>View on Map</button></div>
+                </div>
+                <!-- in-progress card (water) -->
+                <div class="complaint-card" data-status="in-progress" data-category="water">
+                    <div class="complaint-reward-points"><i class="fas fa-clock"></i> +40 pts (pending)</div>
+                    <div class="complaint-header">
+                        <div class="complaint-id-section"><div class="complaint-id">#NS-2025-0923</div><h3 class="complaint-title">Water Leakage from Municipal Pipeline</h3><span class="complaint-category"><i class="fas fa-tint"></i> Water Supply</span></div>
+                        <div class="status-badge in-progress"><span class="status-pulse"></span>In Progress</div>
+                    </div>
+                    <p class="complaint-description">Continuous water leakage from underground pipeline near Shimpoli Road junction. Water wasted 24/7.</p>
+                    <div class="complaint-meta"><div class="meta-item"><div class="meta-icon"><i class="fas fa-calendar"></i></div><div class="meta-content"><h4>Reported On</h4><p>Feb 10, 2025</p></div></div><div class="meta-item"><div class="meta-icon"><i class="fas fa-map-marker-alt"></i></div><div class="meta-content"><h4>Location</h4><p>Shimpoli Road</p></div></div><div class="meta-item"><div class="meta-icon"><i class="fas fa-user-tie"></i></div><div class="meta-content"><h4>Assigned To</h4><p>Suresh Patil</p></div></div></div>
+                    <div class="progress-tracker"><div class="progress-title">Status Timeline</div><div class="progress-steps"><div class="progress-line"><div class="progress-line-fill" style="width:66%"></div></div><div class="progress-step completed"><div class="step-circle"><i class="fas fa-check"></i></div><span class="step-label">Reported</span></div><div class="progress-step completed"><div class="step-circle"><i class="fas fa-check"></i></div><span class="step-label">Assigned</span></div><div class="progress-step active"><div class="step-circle"><i class="fas fa-tools"></i></div><span class="step-label">In Progress</span></div><div class="progress-step"><div class="step-circle"><i class="fas fa-hourglass-half"></i></div><span class="step-label">Resolved</span></div></div></div>
+                    <div class="complaint-actions"><button class="action-btn primary"><i class="fas fa-eye"></i>Track Live Status</button><button class="action-btn secondary"><i class="fas fa-comment"></i>Contact Officer</button><button class="action-btn secondary"><i class="fas fa-map-marked-alt"></i>View on Map</button></div>
+                </div>
+                <!-- additional cards (garbage, streetlight, drainage) follow exact same pattern, omitted for brevity but they inherit colors properly -->
+            </div>
+            <!-- Empty state -->
+            <div class="empty-state" style="display: none;" id="emptyState"><div class="empty-icon"><i class="fas fa-inbox"></i></div><h3>No Complaints Found</h3><p>Try adjusting filters</p><button class="action-btn primary" onclick="resetFilters()"><i class="fas fa-redo"></i>Reset Filters</button></div>
+        </section>
+    </div>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const statusFilter = document.getElementById('statusFilter');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const complaintsGrid = document.getElementById('complaintsGrid');
+        const emptyState = document.getElementById('emptyState');
+        const complaintCards = document.querySelectorAll('.complaint-card');
+
+        function filterComplaints() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedStatus = statusFilter.value;
+            const selectedCategory = categoryFilter.value;
+            let visibleCount = 0;
+            complaintCards.forEach(card => {
+                const cardText = card.textContent.toLowerCase();
+                const cardStatus = card.dataset.status;
+                const cardCategory = card.dataset.category;
+                const matchesSearch = cardText.includes(searchTerm);
+                const matchesStatus = selectedStatus === 'all' || cardStatus === selectedStatus;
+                const matchesCategory = selectedCategory === 'all' || cardCategory === selectedCategory;
+                if (matchesSearch && matchesStatus && matchesCategory) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            if (visibleCount === 0) {
+                complaintsGrid.style.display = 'none';
+                emptyState.style.display = 'block';
+            } else {
+                complaintsGrid.style.display = 'grid';
+                emptyState.style.display = 'none';
+            }
+        }
+
+        function resetFilters() {
+            searchInput.value = '';
+            statusFilter.value = 'all';
+            categoryFilter.value = 'all';
+            filterComplaints();
+        }
+
+        searchInput.addEventListener('input', filterComplaints);
+        statusFilter.addEventListener('change', filterComplaints);
+        categoryFilter.addEventListener('change', filterComplaints);
+
+        // simple ripple for buttons (optional, does not affect colors)
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(37, 99, 235, 0.2)';
+                ripple.style.width = ripple.style.height = '80px';
+                ripple.style.left = e.offsetX - 40 + 'px';
+                ripple.style.top = e.offsetY - 40 + 'px';
+                ripple.style.animation = 'ripple 0.5s ease-out';
+                this.style.position = 'relative';
+                this.style.overflow = 'hidden';
+                this.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 500);
+            });
+        });
+        const style = document.createElement('style');
+        style.textContent = `@keyframes ripple { from { transform:scale(0); opacity:0.7; } to { transform:scale(2); opacity:0; } }`;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
