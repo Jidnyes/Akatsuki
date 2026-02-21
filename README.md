@@ -26,6 +26,8 @@ The platform demonstrates how technology can improve trust between citizens and 
 (Mumbai, Maharashtra, India)
 
 ---
+Live Demo: https://akatsuki-77rj.vercel.app/
+
 
 ## 🧍 Citizen Portal Features
 
